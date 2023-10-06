@@ -10,10 +10,12 @@ source:
   sha256: 4902148a98e61d49dbce69223eaf65dedcaaad752300d901a847de1173a7dc00
 
 build:
+  number: 0
+  # openjdk=11 isn't available on s390x and ppc64le
+  skip: true  # [linux and (s390x or ppc64le)]
   script:
     - cd python
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  number: 0
 
 requirements:
   host:
@@ -26,6 +28,9 @@ requirements:
     - python
     - openjdk >=8
     - pyspark >=3.3.1
+    # jupyter metapackage is a recommended dependency. It's not mentioned in setup.py but in README.md,
+    # see https://github.com/JohnSnowLabs/spark-nlp/tree/5.1.2#jupyter-notebook-python
+    - jupyter
 
 test:
   imports:
