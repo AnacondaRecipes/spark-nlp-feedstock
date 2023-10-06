@@ -10,10 +10,10 @@ source:
   sha256: 4902148a98e61d49dbce69223eaf65dedcaaad752300d901a847de1173a7dc00
 
 build:
+  number: 0
   script:
     - cd python
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  number: 0
 
 requirements:
   host:
