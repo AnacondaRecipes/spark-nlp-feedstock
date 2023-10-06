@@ -1,0 +1,59 @@
+{% set name = "spark-nlp" %}
+{% set version = "5.1.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/JohnSnowLabs/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 4902148a98e61d49dbce69223eaf65dedcaaad752300d901a847de1173a7dc00
+
+build:
+  script:
+    - cd python
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  number: 0
+
+requirements:
+  host:
+    - python
+    - openjdk 11
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python
+    - openjdk >=8
+    - pyspark >=3.3.1
+
+test:
+  imports:
+    - com
+    - sparknlp
+    - sparknlp.annotator
+    - sparknlp.base
+    - sparknlp.common
+    - sparknlp.internal
+    - sparknlp.logging
+    - sparknlp.pretrained
+    - sparknlp.training
+  requires:
+    - pip
+  commands:
+    - pip check
+
+about:
+  home: https://sparknlp.org/
+  dev_url: https://github.com/JohnSnowLabs/spark-nlp
+  doc_url: https://sparknlp.org/docs/en/quickstart
+  summary: John Snow Labs Spark NLP is a natural language processing library built on top of Apache Spark ML
+  description: |
+    Spark NLP is a state-of-the-art Natural Language Processing library built on top of Apache Spark. It provides simple, performant & accurate NLP annotations for machine learning pipelines that scale easily in a distributed environment. Spark NLP comes with 21000+ pretrained pipelines and models in more than 200+ languages. It also offers tasks such as Tokenization, Word Segmentation, Part-of-Speech Tagging, Word and Sentence Embeddings, Named Entity Recognition, Dependency Parsing, Spell Checking, Text Classification, Sentiment Analysis, Token Classification, Machine Translation (+180 languages), Summarization, Question Answering, Table Question Answering, Text Generation, Image Classification, Image to Text (captioning), Automatic Speech Recognition, Zero-Shot Learning, and many more NLP tasks.
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - skupr-anaconda
